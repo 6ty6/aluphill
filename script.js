@@ -169,5 +169,34 @@ if (slides && nextBtn && prevBtn && projectSlides.length > 0) {
     }
   });
 
+  // SWIPE FUNCTIONALITY FOR MOBILE
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  slides.addEventListener("touchstart", (event) => {
+    touchStartX = event.changedTouches[0].screenX;
+  }, false);
+
+  slides.addEventListener("touchend", (event) => {
+    touchEndX = event.changedTouches[0].screenX;
+    handleSwipe();
+  }, false);
+
+  function handleSwipe() {
+    const swipeThreshold = 50; // Minimum distance for a valid swipe
+    const difference = touchStartX - touchEndX;
+
+    if (Math.abs(difference) > swipeThreshold) {
+      if (difference > 0) {
+        // Swiped left - show next project
+        index = (index + 1) % total;
+      } else {
+        // Swiped right - show previous project
+        index = (index - 1 + total) % total;
+      }
+      update();
+    }
+  }
+
   update();
 }

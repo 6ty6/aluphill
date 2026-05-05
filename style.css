@@ -1504,6 +1504,7 @@ transform: translateY(-3px);
 .slides {
   display: flex;
   transition: transform 0.6s ease;
+  touch-action: pan-y;
 }
 
 /* 🔥 IMPORTANT */
@@ -1632,5 +1633,30 @@ transform: translateY(-3px);
 
   .project-cta-premium {
     padding: 40px 0;
+  }
+
+  /* Mobile slider controls adjustments */
+  .prev, .next {
+    padding: 10px 12px;
+    font-size: 18px;
+    top: 45%;
+  }
+
+  .prev {
+    left: 8px;
+  }
+
+  .next {
+    right: 8px;
+  }
+
+  .slider-indicators {
+    bottom: 16px;
+    gap: 8px;
+  }
+
+  .slider-indicators button {
+    width: 10px;
+    height: 10px;
   }
 }
