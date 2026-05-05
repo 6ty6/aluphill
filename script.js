@@ -111,12 +111,20 @@ document.querySelectorAll(".stat-box").forEach(el => {
   observer.observe(el);
 });
 
-const slides = document.querySelector(".slides");
-const nextBtn = document.querySelector(".next");
-const prevBtn = document.querySelector(".prev");
-const projectSlides = document.querySelectorAll(".project-slide");
+// SLIDER INITIALIZATION
+document.addEventListener("DOMContentLoaded", function() {
+  const slides = document.querySelector(".slides");
+  const nextBtn = document.querySelector(".next");
+  const prevBtn = document.querySelector(".prev");
+  const projectSlides = document.querySelectorAll(".project-slide");
 
-if (slides && nextBtn && prevBtn && projectSlides.length > 0) {
+  console.log("Slider Debug:", { slides: !!slides, nextBtn: !!nextBtn, prevBtn: !!prevBtn, totalSlides: projectSlides.length });
+
+  if (!slides || !nextBtn || !prevBtn || projectSlides.length === 0) {
+    console.error("Slider elements not found!");
+    return;
+  }
+
   const total = projectSlides.length;
   const slider = slides.closest(".projects-slider");
   const indicatorsContainer = document.createElement("div");
@@ -148,12 +156,18 @@ if (slides && nextBtn && prevBtn && projectSlides.length > 0) {
     });
   }
 
-  nextBtn.addEventListener("click", () => {
+  nextBtn.addEventListener("click", (e) => {
+    console.log("Next clicked");
+    e.preventDefault();
+    e.stopPropagation();
     index = (index + 1) % total;
     update();
   });
 
-  prevBtn.addEventListener("click", () => {
+  prevBtn.addEventListener("click", (e) => {
+    console.log("Prev clicked");
+    e.preventDefault();
+    e.stopPropagation();
     index = (index - 1 + total) % total;
     update();
   });
@@ -172,26 +186,32 @@ if (slides && nextBtn && prevBtn && projectSlides.length > 0) {
   // SWIPE FUNCTIONALITY FOR MOBILE
   let touchStartX = 0;
   let touchEndX = 0;
+  let touchStartTime = 0;
 
   slides.addEventListener("touchstart", (event) => {
-    touchStartX = event.changedTouches[0].screenX;
-  }, false);
+    touchStartX = event.changedTouches[0].clientX;
+    touchStartTime = Date.now();
+    console.log("Touch start at:", touchStartX);
+  }, { passive: true });
 
   slides.addEventListener("touchend", (event) => {
-    touchEndX = event.changedTouches[0].screenX;
+    touchEndX = event.changedTouches[0].clientX;
     handleSwipe();
-  }, false);
+  }, { passive: true });
 
   function handleSwipe() {
-    const swipeThreshold = 50; // Minimum distance for a valid swipe
+    const swipeThreshold = 50;
+    const timeDiff = Date.now() - touchStartTime;
     const difference = touchStartX - touchEndX;
 
-    if (Math.abs(difference) > swipeThreshold) {
+    console.log("Swipe detected - diff:", difference, "time:", timeDiff);
+
+    if (Math.abs(difference) > swipeThreshold && timeDiff < 1000) {
       if (difference > 0) {
-        // Swiped left - show next project
+        console.log("Swiped left - next");
         index = (index + 1) % total;
       } else {
-        // Swiped right - show previous project
+        console.log("Swiped right - prev");
         index = (index - 1 + total) % total;
       }
       update();
@@ -199,4 +219,5 @@ if (slides && nextBtn && prevBtn && projectSlides.length > 0) {
   }
 
   update();
-}
+  console.log("Slider initialized successfully with", total, "projects");
+});
