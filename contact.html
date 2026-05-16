@@ -48,23 +48,38 @@
     <div class="contact-form-box">
       <h2>Send Us a Message</h2>
 
-      <form>
-        <input type="text" placeholder="Your Name" required>
-        <input type="tel" placeholder="Phone Number" required>
-        <input type="email" placeholder="Email Address">
+      <form id="contactForm">
 
-        <select required>
-          <option value="">Select Service</option>
-          <option>Aluminium Cladding</option>
-          <option>Glass Installation</option>
-          <option>ACP Panels</option>
-          <option>Curtain Wall</option>
-        </select>
+  <input type="text"
+         id="name"
+         placeholder="Your Name"
+         required>
 
-        <textarea rows="5" placeholder="What can we help you with?" required></textarea>
+  <input type="tel"
+         id="phone"
+         placeholder="Phone Number"
+         required>
 
-        <button type="submit">Request Quote</button>
-      </form>
+  <input type="email"
+         id="email"
+         placeholder="Email Address">
+
+  <select id="service" required>
+    <option value="">Select Service</option>
+    <option>Aluminium Cladding</option>
+    <option>Glass Installation</option>
+    <option>ACP Panels</option>
+    <option>Curtain Wall</option>
+  </select>
+
+  <textarea id="message"
+            rows="5"
+            placeholder="What can we help you with?"
+            required></textarea>
+
+  <button type="submit">Send Message</button>
+
+</form>
     </div>
 
     <!-- CONTACT INFO -->

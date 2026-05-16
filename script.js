@@ -112,4 +112,36 @@ document.querySelectorAll(".stat-box").forEach(el => {
 });
 
 
- 
+
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", function(e) {
+
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+  const service = document.getElementById("service").value;
+  const message = document.getElementById("message").value;
+
+  const whatsappMessage = `
+*NEW CUSTOMER ENQUIRY*
+
+*Name:* ${name}
+*Phone:* ${phone}
+*Email:* ${email}
+
+*Service Needed:* ${service}
+
+*Message:*
+${message}
+`;
+
+  const whatsappURL =
+`whatsapp://send?phone=233240925227&text=${encodeURIComponent(whatsappMessage)}`;
+
+  window.location.href = whatsappURL;
+
+});
+
